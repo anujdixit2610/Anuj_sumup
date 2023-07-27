@@ -6,17 +6,12 @@ sources:
 
 models:
 
-  - name: raw_device
+  - name: stage_device
     columns:
       - name: device_id
         tests:
           - unique
           - not_null
-      - name: store_id
-        tests:
-          - relationships:
-              to: ref('raw_store')
-              field: store_id
       - name: device_type
         tests:
           - accepted_values:
