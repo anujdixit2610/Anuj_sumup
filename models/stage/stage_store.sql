@@ -10,12 +10,11 @@ with final as (
         address as store_address,
         city as store_city,
         country as store_country,
-        cast(created_at as timestamp) as store_created_at,
+        PARSE_TIMESTAMP('%m.%d.%Y %H:%M:%S', created_at) as store_created_at,
         typology as store_typology,
         customer_id as customer_id,
         row_number() over (partition by id order by created_at desc) as rn
-    FROM 
-        FROM `supple-hangout-394013.dbt_adixit.raw_store`
+    FROM `supple-hangout-394013.dbt_adixit.raw_store`
 )
 select
    store_id,
@@ -27,6 +26,6 @@ select
    store_typology,
    customer_id
 from
-    base
+    final
 where
     rn = 1
